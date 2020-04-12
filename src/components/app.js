@@ -6,6 +6,7 @@ import { NumberBanner } from './NumberBanner/NumberBanner';
 import IntroModal from './IntroModal/IntroModal';
 import PrizeTable from './PrizeTable/PrizeTable';
 import WinnersTable from './WinnersTable/WinnersTable';
+import bingoNumberWords from '../constants/phrases';
 
 function getRandomizedNumbers() {
 	let numArray = [];
@@ -129,6 +130,8 @@ export default class App extends Component {
 				<NumbersTable numbers={usedNumbers} />
 			</div>
 			<div className="col col-sm-6 d-flex align-items-center flex-column">
+				<p className="w-100 h2 text-center text-primary">'{bingoNumberWords[currentNumber -1]}'</p>
+				<div className="mb-4" />
 				<NumberBanner number={currentNumber} />
 				<div className="mb-4" />
 				<button className="btn btn-lg btn-primary" onClick={this.generateNumber}>
