@@ -92,12 +92,12 @@ export default class App extends Component {
 	};
 	
 	renderContent() {
-		const { usedNumbers, started, prizes } = this.state;
+		const { numbers, usedNumbers, started, prizes } = this.state;
 		const currentNumber = last(usedNumbers);
 		
-		return (<>
-			{!started ? (
-				<IntroModal onStart={this.start}>
+		if (!started) {
+			return (<>
+				{<IntroModal title="Tambola">
 					<div className="row">
 						<div className="col">
 							<PrizeTable prizes={prizes} />
@@ -114,35 +114,40 @@ export default class App extends Component {
 							</button>
 						</div>
 					</div>
-				</IntroModal>
-			) : (
-				<div className="row">
-					<div className="col col-sm-6 border-right">
-						<NumbersTable numbers={usedNumbers} />
-					</div>
-					<div className="col col-sm-6 d-flex align-items-center flex-column">
-						<NumberBanner number={currentNumber} />
-						<div className="mb-4" />
-						<button className="btn btn-lg btn-primary" onClick={this.generateNumber}>
-							Tambola bhyi Tambola
-						</button>
-						<div className="mb-4" />
-						<hr className="w-100" />
-						<div className="mb-4" />
-						<div className="w-100">
-							<WinnersTable prizes={prizes} onChange={this.onWinnerChange} />
-						</div>
-					</div>
+				</IntroModal>}
+			</>);
+		}
+		
+		if (!numbers.length) {
+			return (<IntroModal title={<span>Katha samaapt! <br /><br /> Aaj k vijeta</span>}>
+				<WinnersTable prizes={prizes} onChange={this.onWinnerChange} />
+			</IntroModal>);
+		}
+		
+		return (<div className="row">
+			<div className="col col-sm-6 border-right">
+				<NumbersTable numbers={usedNumbers} />
+			</div>
+			<div className="col col-sm-6 d-flex align-items-center flex-column">
+				<NumberBanner number={currentNumber} />
+				<div className="mb-4" />
+				<button className="btn btn-lg btn-primary" onClick={this.generateNumber}>
+					Tambola bhyi Tambola
+				</button>
+				<div className="mb-4" />
+				<hr className="w-100" />
+				<div className="mb-4" />
+				<div className="w-100">
+					<WinnersTable prizes={prizes} onChange={this.onWinnerChange} />
 				</div>
-			)}
-		</>);
+			</div>
+		</div>);
 	}
 	
 	render() {
 		return (
 			<div id="app" className="container-fluid p-4">
 				{this.renderContent()}
-			
 			</div>
 		);
 	}

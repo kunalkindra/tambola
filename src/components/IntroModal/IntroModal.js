@@ -1,4 +1,4 @@
-export default function IntroModal({ onStart, children }) {
+export default function IntroModal({ children, title }) {
 	return (
 		<div className="modal fade show intro-modal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 			aria-hidden="true"
@@ -6,7 +6,7 @@ export default function IntroModal({ onStart, children }) {
 			<div className="modal-dialog modal-dialog-centered modal-lg" role="document">
 				<div className="modal-content">
 					<div className="modal-body text-center py-4">
-						<h1 className="mb-4">Tambola</h1>
+						<h1 className="mb-4">{title}</h1>
 						{children}
 					</div>
 				</div>
