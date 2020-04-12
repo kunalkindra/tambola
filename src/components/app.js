@@ -77,6 +77,14 @@ export default class App extends Component {
 	};
 	
 	start = () => {
+		window.onbeforeunload = function(e) {
+			e = e || window.event;
+			let returnString = 'Are you sure?';
+			if (e) {
+				e.returnValue = returnString;
+			}
+			return returnString;
+		};
 		this.setState({ started: true });
 		this.generateNumber();
 	};
