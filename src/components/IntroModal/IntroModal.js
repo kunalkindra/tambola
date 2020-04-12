@@ -1,17 +1,13 @@
-export default function IntroModal({ onStart }) {
+export default function IntroModal({ onStart, children }) {
 	return (
 		<div className="modal fade show intro-modal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 			aria-hidden="true"
 		>
-			<div className="modal-dialog modal-dialog-centered" role="document">
+			<div className="modal-dialog modal-dialog-centered modal-lg" role="document">
 				<div className="modal-content">
-					<div className="modal-body text-center py-5">
-						<p className="h1">
-						Kre fir Tambola shuru?
-						</p>
-						<div className="mb-5" />
-						<br />
-						<button type="button" onClick={onStart} className="btn btn-primary btn-lg mx-auto w-50">Start</button>
+					<div className="modal-body text-center py-4">
+						<h1 className="mb-4">Tambola</h1>
+						{children}
 					</div>
 				</div>
 			</div>
