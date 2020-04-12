@@ -130,16 +130,13 @@ export default class App extends Component {
 				<NumbersTable numbers={usedNumbers} />
 			</div>
 			<div className="col col-sm-6 d-flex align-items-center flex-column">
-				<p className="w-100 h2 text-center text-primary">'{bingoNumberWords[currentNumber -1]}'</p>
-				<div className="mb-4" />
+				<p className="w-100 h2 text-center text-primary mb-2">'{bingoNumberWords[currentNumber -1]}'</p>
 				<NumberBanner number={currentNumber} />
 				<div className="mb-4" />
 				<button className="btn btn-lg btn-primary" onClick={this.generateNumber}>
 					Tambola bhyi Tambola
 				</button>
-				<div className="mb-4" />
 				<hr className="w-100" />
-				<div className="mb-4" />
 				<div className="w-100">
 					<WinnersTable prizes={prizes} onChange={this.onWinnerChange} />
 				</div>

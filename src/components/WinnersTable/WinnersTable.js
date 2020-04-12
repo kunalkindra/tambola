@@ -1,7 +1,7 @@
 export default function WinnersTable({ prizes, onChange }) {
 	const items = [prizes.slice(0, prizes.length / 2), prizes.slice(prizes.length / 2, prizes.length)];
 	return (
-		<div className="row small">
+		<div className="row">
 			{items.map(prizes => (
 				<div className="col col-sm-6">
 					<table className="table text-left prize-table">
@@ -9,7 +9,7 @@ export default function WinnersTable({ prizes, onChange }) {
 							<tr>
 								<th style={{ width: '50%' }}>Inaam</th>
 								<th style={{ width: '20%' }} className="text-right">Inaam rashi</th>
-								<th style={{ width: '30%' }} >Vijeta</th>
+								<th className="text-center" style={{ width: '30%' }} >Vijeta</th>
 							</tr>
 						</thead>
 						<tbody>
