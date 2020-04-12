@@ -108,10 +108,10 @@ export default class App extends Component {
 			return (<>
 				{<IntroModal title="Tambola">
 					<div className="row">
-						<div className="col-12 col-sm-6">
+						<div className="col-12 col-sm-12 col-md-6">
 							<PrizeTable prizes={prizes} />
 						</div>
-						<div className="col-12 col-sm-6 d-none d-sm-block">
+						<div className="col-12 col-sm-12 col-md-6 d-none d-sm-none d-md-block">
 							<div className="mb-5" />
 							<p className="h2">
 								Kre shuru?
