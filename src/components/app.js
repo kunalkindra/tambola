@@ -100,10 +100,11 @@ export default class App extends Component {
 			return (<>
 				{<IntroModal title="Tambola">
 					<div className="row">
-						<div className="col">
+						<div className="col-12 col-sm-6">
 							<PrizeTable prizes={prizes} />
 						</div>
-						<div className="col d-flex flex-column justify-content-center">
+						<div className="col-12 col-sm-6 d-none d-sm-block">
+							<div className="mb-5" />
 							<p className="h2">
 								Kre shuru?
 							</p>
@@ -130,7 +131,7 @@ export default class App extends Component {
 				<NumbersTable numbers={usedNumbers} />
 			</div>
 			<div className="col col-sm-6 d-flex align-items-center flex-column">
-				<p className="w-100 h2 text-center text-primary mb-2">'{bingoNumberWords[currentNumber -1]}'</p>
+				<p className="w-100 h2 text-center text-primary mb-2">'{bingoNumberWords[currentNumber - 1]}'</p>
 				<NumberBanner number={currentNumber} />
 				<div className="mb-4" />
 				<button className="btn btn-lg btn-primary" onClick={this.generateNumber}>
