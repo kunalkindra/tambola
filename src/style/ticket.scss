@@ -2,7 +2,13 @@
   table-layout: fixed;
   font-size: 4.5vw;
   font-weight: bold;
+  &__number {
+    background: $info;
+    color: $white;
+  }
   &__number--checked {
+    background: $warning;
+    color: $white;
     text-decoration: line-through;
   }
 }
