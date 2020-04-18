@@ -1,9 +1,6 @@
-import { h, Component } from 'preact';
-import { Router } from 'preact-router';
+import { Component } from 'preact';
 
 import Ticket from './pages/Ticket';
-import Intro from './pages/Intro';
-import Game from './pages/Game';
 
 export default class Main extends Component {
 	state = {
@@ -59,10 +56,6 @@ export default class Main extends Component {
 		});
 
 		this.setState({ prizes: updatedPrizes });
-	};
-
-	handleRoute = e => {
-		this.currentUrl = e.url;
 	};
 
 	render() {
