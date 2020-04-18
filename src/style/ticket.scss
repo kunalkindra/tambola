@@ -1,0 +1,8 @@
+.ticket {
+  table-layout: fixed;
+  font-size: 4.5vw;
+  font-weight: bold;
+  &__number--checked {
+    text-decoration: line-through;
+  }
+}
