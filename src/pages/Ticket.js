@@ -25,13 +25,13 @@ export default class Ticket extends Component {
 	
 	render() {
 		const id = getTicketId();
-		const { numbers, lastName, salutation } = tickets.find(tick => tick.id === id);
+		const { numbers, lastName, firstName } = tickets.find(tick => tick.id === id);
 		const checkedNumbers = this.state.checkedNumbers;
 		let remainingNumbers = 15 - checkedNumbers.length;
 		return (
 			<div>
 				<div className="d-flex justify-content-between align-items-baseline">
-					<h4 className="mb-0">Hello {salutation} {lastName}!</h4>
+					<h4 className="mb-0">{firstName} {lastName} ji, all the best!</h4>
 					<div>Remaining - <span className="bg-info text-white p-1 rounded h6">{zeroPad(remainingNumbers)}</span></div>
 				</div>
 				<hr />
