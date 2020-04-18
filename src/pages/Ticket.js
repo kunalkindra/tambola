@@ -1,10 +1,11 @@
 import { Component } from 'preact';
 import { tickets } from '../constants/tickets';
 import { zeroPad } from '../utils/zeroPad';
+import { SavedTicket } from '../utils/SavedTicket';
 
 
 export default class Ticket extends Component {
-	state = { checkedNumbers: [] };
+	state = { checkedNumbers: SavedTicket.read(this.props.id) };
 	toggleCheck = (e) => {
 		const number = +e.target.dataset.number;
 		if (!number)  return;
@@ -13,6 +14,11 @@ export default class Ticket extends Component {
 		const newCheckedNumbers = checked ? checkedNumbers.filter(num => num !== number) : checkedNumbers.concat(number);
 		this.setState({ checkedNumbers: newCheckedNumbers });
 	};
+	
+	componentDidUpdate() {
+		SavedTicket.update(this.props.id, this.state.checkedNumbers);
+	}
+	
 	render() {
 		const id = this.props.id;
 		const { numbers, lastName, salutation } = tickets[id];
