@@ -1,6 +1,9 @@
 import { Component } from 'preact';
 
 import Ticket from './pages/Ticket';
+import Intro from './pages/Intro';
+import Game from './pages/Game';
+import Router from 'preact-router';
 
 export default class Main extends Component {
 	state = {
@@ -62,7 +65,11 @@ export default class Main extends Component {
 		return (
 			<div id="app">
 				<div id="app" className="container-fluid p-4">
-					<Ticket />
+					<Router onChange={this.handleRoute}>
+						<Intro path="/" prizes={this.state.prizes} />
+						<Game path="/game" prizes={this.state.prizes} onWinnerChange={this.onWinnerChange} />
+						<Ticket path="/ticket" />
+					</Router>
 				</div>
 			</div>
 		);

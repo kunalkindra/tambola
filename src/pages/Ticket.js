@@ -4,12 +4,8 @@ import { zeroPad } from '../utils/zeroPad';
 import { SavedTicket } from '../utils/SavedTicket';
 
 
-function getTicketId() {
-	return window.location.search.split('id=')[1];
-}
-
 export default class Ticket extends Component {
-	state = { checkedNumbers: SavedTicket.read(getTicketId()) };
+	state = { checkedNumbers: SavedTicket.read(this.props.id) };
 	toggleCheck = (e) => {
 		const number = +e.target.dataset.number;
 		if (!number)  return;
@@ -20,12 +16,12 @@ export default class Ticket extends Component {
 	};
 	
 	componentDidUpdate() {
-		SavedTicket.update(getTicketId(), this.state.checkedNumbers);
+		SavedTicket.update(this.props.id, this.state.checkedNumbers);
 	}
 	
 	render() {
-		const id = getTicketId();
-		const { numbers, lastName, firstName } = tickets.find(tick => tick.id === id);
+		const id = this.props.id;
+		const { numbers, lastName, firstName } = tickets[id];
 		const checkedNumbers = this.state.checkedNumbers;
 		let remainingNumbers = 15 - checkedNumbers.length;
 		return (
