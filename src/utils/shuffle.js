@@ -1,4 +1,5 @@
 export function shuffle(array) {
+	array = array.slice(0);
 	let currentIndex = array.length, temporaryValue, randomIndex;
 	
 	// While there remain elements to shuffle...
