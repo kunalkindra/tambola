@@ -25,6 +25,7 @@
   "dependencies": {
     "bootstrap": "^4.4.1",
     "history": "^4.10.1",
+    "lodash": "^4.17.15",
     "node-sass": "^4.13.1",
     "preact": "^10.1.0",
     "preact-render-to-string": "^5.1.2",
