@@ -4,6 +4,7 @@ import { zeroPad } from '../utils/zeroPad';
 import { SavedTicket } from '../utils/SavedTicket';
 import Loader from '../components/Loader/Loader';
 import NewTicketLink from '../components/NewTicketLink/NewTicketLink';
+import { Link } from 'preact-router';
 
 
 function getTicketFileName(ticketId) {
@@ -109,6 +110,14 @@ export default class Ticket extends Component {
 						</tr>
 					))}
 				</table>
+				{
+					!remainingNumbers &&
+					(
+						<p>
+							<Link href="/">Return to home screen</Link> to play again.
+						</p>
+					)
+				}
 			</div>
 		);
 	}
