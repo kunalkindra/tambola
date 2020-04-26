@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "preact build --no-sw --no-esm --no-brotli --no-inline-css --template=public/index.html --no-prerender",
+    "build": "preact build --no-sw --no-esm --no-brotli --no-inline-css --template=public/index.html --no-prerender && yarn copy_manifest",
+    "copy_manifest": "cp manifest.json build/manifest.json",
     "serve": "sirv build --cors --single",
     "dev": "preact watch",
     "lint": "eslint src"
