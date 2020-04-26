@@ -9,7 +9,7 @@ export default function Intro({ prizes }) {
 			<div className="row d-md-none">
 				<IntroModal title="Welcome!">
 					<div className="text-center">
-						<p className="h5">To start playing Tambola, please click on the button below to get your ticket.</p>
+						<p>To start playing Tambola, please click on the button below to get your ticket.</p>
 						<div className="mt-4" />
 						<br />
 						<NewTicketLink />
