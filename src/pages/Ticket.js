@@ -60,7 +60,13 @@ export default class Ticket extends Component {
 		const { numbers, checkedNumbers, loading, error, alertVisible } = this.state;
 		const { id } = this.props;
 		if (loading) {
-			return <div className="d-flex w-100 align-items-center justify-content-center vh-100 m-n4"><Loader /></div>;
+			return (
+				<div className="text-center py-5">
+					Just a moment - getting your ticket ready!
+					<div className="mt-5" />
+					<Loader />
+				</div>
+			);
 		}
 		if (error) {
 			return (
