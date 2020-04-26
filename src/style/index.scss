@@ -18,3 +18,10 @@
 @import "intro-modal";
 @import "prize-table";
 @import "ticket";
+
+button {
+  -webkit-appearance: none;
+  border: 0;
+  background: none;
+  -moz-appearance: none;
+}
