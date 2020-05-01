@@ -1,16 +1,16 @@
 /* eslint-disable react/jsx-no-bind */
 import { route } from 'preact-router';
+import { CurrentTicket } from '../../utils/CurrentTicket';
 
 export default function NewTicketLink() {
-	const ticketId = Math.floor(Math.random() * 99999);
-	const href = `/ticket?id=${ticketId}`;
+	const href = `/ticket?id=${CurrentTicket.getId()}`;
 	return (
 		<button
 			type="button"
-			onClick={() => { console.log('clicked'); route(href); }}
+			onClick={() => { route(href); }}
 			className="btn btn-primary btn-lg mx-auto"
 		>
-            Get a ticket
+            Get your ticket
 		</button>
 	);
 }

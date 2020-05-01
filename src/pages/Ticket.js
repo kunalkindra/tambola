@@ -5,6 +5,7 @@ import { SavedTicket } from '../utils/SavedTicket';
 import Loader from '../components/Loader/Loader';
 import NewTicketLink from '../components/NewTicketLink/NewTicketLink';
 import { Link } from 'preact-router';
+import { CurrentTicket } from '../utils/CurrentTicket';
 
 
 function getTicketFileName(ticketId) {
@@ -33,7 +34,11 @@ export default class Ticket extends Component {
 	hideAlert = () => {
 		this.setState({ alertVisible: false });
 	};
-	
+ 
+	getRemainingNumbers() {
+		return 15 - this.state.checkedNumbers.length;
+	}
+ 
 	componentDidMount() {
 		const ticketId = +this.props.id;
 		const ticketFileName = getTicketFileName(ticketId);
@@ -50,13 +55,15 @@ export default class Ticket extends Component {
 				}
 				const numbers = ticket.ticket;
 				this.setState({ numbers, loading: false });
+				CurrentTicket.update(ticketId);
 			}).catch(this.setTicketError);
 	}
-	
+
 	componentDidUpdate() {
 		SavedTicket.update(this.props.id, this.state.checkedNumbers);
+		if (!this.getRemainingNumbers()) CurrentTicket.reset();
 	}
-	
+
 	render() {
 		const { numbers, checkedNumbers, loading, error, alertVisible } = this.state;
 		const { id } = this.props;
@@ -78,7 +85,7 @@ export default class Ticket extends Component {
 					<NewTicketLink />
 				</div>);
 		}
-		const remainingNumbers = 15 - checkedNumbers.length;
+		const remainingNumbers = this.getRemainingNumbers();
 		return (
 			<div>
 				{alertVisible && (
@@ -114,7 +121,11 @@ export default class Ticket extends Component {
 					!remainingNumbers &&
 					(
 						<p>
-							<Link href="/">Return to home screen</Link> to play again.
+							All numbers checked! Want to play again?
+							<Link
+								href="/"
+								className="btn btn-primary btn-lg ml-2"
+							>Get a new ticket</Link>
 						</p>
 					)
 				}
