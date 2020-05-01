@@ -18,7 +18,7 @@ export default class Intro extends Component {
 		let { prizes } = this.props;
 		return (
 			<>
-				<div className="row d-md-none">
+				<div className="row d-lg-none">
 					<IntroModal title="Welcome!">
 						<div className="text-center">
 							<p>To start playing Tambola, please click on the button below to get your ticket.</p>
@@ -28,7 +28,7 @@ export default class Intro extends Component {
 						</div>
 					</IntroModal>
 				</div>
-				<div className="d-none d-sm-none d-md-block">
+				<div className="d-none d-sm-none d-md-none d-lg-block">
 					<IntroModal title="Tambola">
 						<div className="row">
 							<div className="col-6">
