@@ -121,11 +121,11 @@ export default class Ticket extends Component {
 				{
 					!remainingNumbers &&
 					(
-						<p>
-							All numbers checked! Want to play again?
+						<p className="text-center">
+							All numbers checked! Want to play again?{' '}
 							<Link
 								href={ROUTES.HOME()}
-								className="btn btn-primary btn-lg ml-2"
+								className="btn btn-primary btn-lg"
 							>Get a new ticket</Link>
 						</p>
 					)
