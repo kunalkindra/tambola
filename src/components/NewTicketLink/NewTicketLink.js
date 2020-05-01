@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-no-bind */
 import { route } from 'preact-router';
 import { CurrentTicket } from '../../utils/CurrentTicket';
+import { ROUTES } from '../../constants/routes';
 
 export default function NewTicketLink() {
-	const href = `/ticket?id=${CurrentTicket.getId()}`;
+	const href = ROUTES.TICKET(CurrentTicket.getId());
 	return (
 		<button
 			type="button"

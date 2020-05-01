@@ -6,6 +6,7 @@ import Loader from '../components/Loader/Loader';
 import NewTicketLink from '../components/NewTicketLink/NewTicketLink';
 import { Link } from 'preact-router';
 import { CurrentTicket } from '../utils/CurrentTicket';
+import { ROUTES } from '../constants/routes';
 
 
 function getTicketFileName(ticketId) {
@@ -123,7 +124,7 @@ export default class Ticket extends Component {
 						<p>
 							All numbers checked! Want to play again?
 							<Link
-								href="/"
+								href={ROUTES.HOME()}
 								className="btn btn-primary btn-lg ml-2"
 							>Get a new ticket</Link>
 						</p>

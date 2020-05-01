@@ -5,11 +5,12 @@ import { Link } from 'preact-router/match';
 import NewTicketLink from '../components/NewTicketLink/NewTicketLink';
 import { CurrentTicket } from '../utils/CurrentTicket';
 import { route } from 'preact-router';
+import { ROUTES } from '../constants/routes';
 
 export default class Intro extends Component {
 	componentDidMount() {
 		if (CurrentTicket.isValid()) {
-			route(`/ticket?id=${CurrentTicket.getId()}`);
+			route(ROUTES.TICKET(CurrentTicket.getId()));
 		}
 	}
 	
@@ -42,7 +43,7 @@ export default class Intro extends Component {
 								<br />
 								<Link
 									type="button"
-									href="/game"
+									href={ROUTES.GAME()}
 									className="btn btn-primary btn-lg mx-auto w-50"
 								>
 									Start
