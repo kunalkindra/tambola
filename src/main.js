@@ -11,42 +11,47 @@ export default class Main extends Component {
 		prizes: [{
 			id: 1,
 			name: 'Saare corners',
-			amount: 50,
+			amount: 30,
 			winner: ''
 		}, {
 			id: 2,
 			name: 'Quick 5',
-			amount: 50,
+			amount: 20,
 			winner: ''
 		}, {
 			id: 3,
 			name: 'Upar alli line',
-			amount: 50,
+			amount: 30,
 			winner: ''
 		}, {
 			id: 4,
 			name: 'Beech aali line',
-			amount: 50,
+			amount: 30,
 			winner: ''
 		}, {
 			id: 5,
 			name: 'Nichli line',
-			amount: 50,
+			amount: 30,
 			winner: ''
 		}, {
 			id: 6,
 			name: 'Full house',
-			amount: 100,
+			amount: 70,
 			winner: ''
 		}, {
 			id: 7,
 			name: 'Fir se full house',
-			amount: 80,
+			amount: 50,
 			winner: ''
 		}, {
 			id: 8,
 			name: 'Ek aur full house',
-			amount: 70,
+			amount: 30,
+			winner: ''
+		}, {
+			id: 9,
+			name: 'Muflis',
+			amount: 50,
 			winner: ''
 		}]
 	};
