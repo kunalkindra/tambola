@@ -7,14 +7,8 @@ import NewTicketLink from '../components/NewTicketLink/NewTicketLink';
 import { Link } from 'preact-router';
 import { CurrentTicket } from '../utils/CurrentTicket';
 import { ROUTES } from '../constants/routes';
-
-
-function getTicketFileName(ticketId) {
-	const rounded = round(ticketId, -3) || 1;
-	const firstNumber = rounded >= ticketId ? rounded - 999 : rounded + 1;
-	const lastNumber = firstNumber + 999;
-	return `${firstNumber}-${lastNumber}.json`;
-}
+import { DisplayTicket } from '../components/DisplayTicket/DisplayTicket';
+import { getTicket } from '../api';
 
 export default class Ticket extends Component {
 	state = { checkedNumbers: SavedTicket.read(this.props.id), loading: true, numbers: null, alertVisible: true };
@@ -42,19 +36,8 @@ export default class Ticket extends Component {
  
 	componentDidMount() {
 		const ticketId = +this.props.id;
-		const ticketFileName = getTicketFileName(ticketId);
-		if (!ticketFileName) {
-			this.setTicketError();
-		}
-		fetch(`assets/tickets/${(ticketFileName)}`)
-			.then(response => response.json())
-			.then(tickets => {
-				const ticket = tickets.find(ticket => ticket.id === ticketId);
-				if (!ticket) {
-					this.setTicketError();
-					return;
-				}
-				const numbers = ticket.ticket;
+		getTicket(ticketId)
+			.then(({ ticket: numbers }) => {
 				this.setState({ numbers, loading: false });
 				CurrentTicket.update(ticketId);
 			}).catch(this.setTicketError);
@@ -91,33 +74,20 @@ export default class Ticket extends Component {
 			<div>
 				{alertVisible && (
 					<p className="small alert alert-warning alert-dismissible d-sm-none">
-					Please use your device in landscape mode for a better experience
+						Please use your device in landscape mode for a better experience
 						<button type="button" className="close" onClick={this.hideAlert}>
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</p>
 				)}
 				<div className="d-flex justify-content-between align-items-baseline">
-					<div className="h6 text-muted m-0"># {id}</div><div>Remaining - <span className="bg-info text-white p-1 rounded h6">{zeroPad(remainingNumbers)}</span></div>
+					<div className="h6 text-muted m-0"># {id}</div>
+					<div>Remaining - <span
+						className="bg-info text-white p-1 rounded h6"
+					                 >{zeroPad(remainingNumbers)}</span></div>
 				</div>
 				<hr />
-				<table className="ticket table table-bordered text-center">
-					{numbers.map(line => (
-						<tr>
-							{line.map(number => {
-								const classes = ['ticket__number', 'px-0'];
-								const checked = checkedNumbers.includes(number);
-								if (checked)
-									classes.push('ticket__number--checked');
-								return (
-									<td onClick={this.toggleCheck} data-number={number} className={classes.join(' ')}>
-										{number}
-									</td>
-								);
-							})}
-						</tr>
-					))}
-				</table>
+				<DisplayTicket numbers={numbers} checkedNumbers={checkedNumbers} onNumberCheck={this.toggleCheck} />
 				{
 					!remainingNumbers &&
 					(

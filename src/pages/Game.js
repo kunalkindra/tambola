@@ -6,6 +6,7 @@ import { NumberBanner } from '../components/NumberBanner/NumberBanner';
 import IntroModal from '../components/IntroModal/IntroModal';
 import WinnersTable from '../components/WinnersTable/WinnersTable';
 import bingoNumberWords from '../constants/phrases';
+import TicketLoader from '../components/TicketLoader/TicketLoader';
 
 function getRandomizedNumbers() {
 	let numArray = [];
@@ -62,6 +63,9 @@ export default class Game extends Component {
 					<NumbersTable numbers={usedNumbers} />
 				</div>
 				<div className="col col-sm-6 d-flex align-items-center flex-column">
+					<div className="ticketLoader__cont">
+						<TicketLoader />
+					</div>
 					<p className="w-100 h2 text-center text-primary mb-2">'{bingoNumberWords[currentNumber - 1]}'</p>
 					<NumberBanner number={currentNumber} />
 					<div className="mb-4" />

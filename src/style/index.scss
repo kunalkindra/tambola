@@ -25,3 +25,28 @@ button {
   background: none;
   -moz-appearance: none;
 }
+
+.drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  background: white;
+  right: -500px;
+  width: 500px;
+  transition: right 0.5s;
+  z-index: 1000;
+  &-open {
+    right: 0;
+  }
+  &__close {
+    position: absolute;
+    top: 33px;
+    right: 20px;
+  }
+}
+
+.ticketLoader__cont {
+  position: absolute;
+  top: 310px;
+  right: 10px;
+}
