@@ -1,7 +1,10 @@
+import withResolved from '../hoc/WithResolved/WithResolved';
+import { getTicket } from '../../api';
+
 export default function DisplayTicket({
-  numbers,
-  checkedNumbers,
-  onNumberCheck,
+  ticket: { ticket: numbers },
+  checkedNumbers = [],
+  onNumberCheck = () => {},
   fixedSize,
 }) {
   const ticketClasses = ['ticket', 'table', 'table-bordered', 'text-center'];
@@ -29,3 +32,12 @@ export default function DisplayTicket({
     </table>
   );
 }
+
+export const ResolvedDisplayTicket = withResolved({
+  query: getTicket,
+  queryArgs: (props) => props.ticketId,
+  as: 'ticket',
+  loadingProps: {
+    message: 'Just a moment - loading the ticket!',
+  },
+})(DisplayTicket);

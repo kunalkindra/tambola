@@ -2,30 +2,17 @@ import { Link } from 'preact-router';
 import { Component } from 'preact';
 import zeroPad from '../utils/zeroPad';
 import SavedTicket from '../utils/SavedTicket';
-import Loader from '../components/Loader/Loader';
-import NewTicketLink from '../components/NewTicketLink/NewTicketLink';
 import CurrentTicket from '../utils/CurrentTicket';
 import { ROUTES } from '../constants/routes';
 import DisplayTicket from '../components/DisplayTicket/DisplayTicket';
+import withResolved from '../components/hoc/WithResolved/WithResolved';
 import { getTicket } from '../api';
 
-export default class Ticket extends Component {
+class Ticket extends Component {
   state = {
     checkedNumbers: SavedTicket.read(this.props.id),
-    loading: true,
-    numbers: null,
     alertVisible: true,
   };
-
-  componentDidMount() {
-    const ticketId = +this.props.id;
-    getTicket(ticketId)
-      .then(({ ticket: numbers }) => {
-        this.setState({ numbers, loading: false });
-        CurrentTicket.update(ticketId);
-      })
-      .catch(this.setTicketError);
-  }
 
   componentDidUpdate() {
     SavedTicket.update(this.props.id, this.state.checkedNumbers);
@@ -51,38 +38,9 @@ export default class Ticket extends Component {
     this.setState({ checkedNumbers: newCheckedNumbers });
   };
 
-  setTicketError = () => {
-    this.setState({ loading: false, error: true });
-  };
-
   render() {
-    const {
-      numbers,
-      checkedNumbers,
-      loading,
-      error,
-      alertVisible,
-    } = this.state;
-    const { id } = this.props;
-    if (loading) {
-      return (
-        <div className="text-center py-5">
-          Just a moment - getting your ticket ready!
-          <div className="mt-5" />
-          <Loader />
-        </div>
-      );
-    }
-    if (error) {
-      return (
-        <div className="vh-100 m-n4 text-center p-5">
-          Oops, something went wrong. Please get a new ticket.
-          <br />
-          <div className="mt-4" />
-          <NewTicketLink />
-        </div>
-      );
-    }
+    const { checkedNumbers, alertVisible } = this.state;
+    const { id, ticket } = this.props;
     const remainingNumbers = this.getRemainingNumbers();
     return (
       <div>
@@ -105,7 +63,7 @@ export default class Ticket extends Component {
         </div>
         <hr />
         <DisplayTicket
-          numbers={numbers}
+          ticket={ticket}
           checkedNumbers={checkedNumbers}
           onNumberCheck={this.toggleCheck}
         />
@@ -121,3 +79,23 @@ export default class Ticket extends Component {
     );
   }
 }
+
+export default withResolved({
+  query: getTicket,
+  queryArgs: (props) => props.id,
+  as: 'ticket',
+  loadingProps: {
+    message: 'Just a moment - getting your ticket ready!',
+  },
+  errorProps: {
+    message: (
+      <div className="text-center">
+        Oops, something went wrong. Please try again.
+        <div className="mt-4" />
+        <Link href={ROUTES.HOME()} className="btn btn-primary btn-lg">
+          Get a new ticket
+        </Link>
+      </div>
+    ),
+  },
+})(Ticket);
