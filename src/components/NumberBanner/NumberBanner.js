@@ -1,7 +1,7 @@
-export function NumberBanner({ number }) {
-	return (
-		<div className="py-2 bg-info rounded text-white number-banner text-center">
-			{number}
-		</div>
-	);
+export default function NumberBanner({ number }) {
+  return (
+    <div className="py-2 bg-info rounded text-white number-banner text-center">
+      {number}
+    </div>
+  );
 }

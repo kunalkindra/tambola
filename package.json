@@ -11,26 +11,121 @@
     "lint": "eslint src"
   },
   "eslintConfig": {
-    "extends": "eslint-config-synacor"
+    "parser": "babel-eslint",
+    "extends": [
+      "airbnb",
+      "plugin:jest/recommended",
+      "prettier"
+    ],
+    "root": true,
+    "env": {
+      "browser": true,
+      "jest": true
+    },
+    "plugins": [
+      "jest",
+      "prettier"
+    ],
+    "rules": {
+      "import/no-extraneous-dependencies": [
+        "error",
+        {
+          "devDependencies": [
+            "**/*.spec.{js,jsx}",
+            "**/*.stories.{js,jsx}",
+            "**/__test-helpers__/**/*.{js,jsx}",
+            "config/**/*.js",
+            "features/**/*.js",
+            "src/setupTests.js"
+          ]
+        }
+      ],
+      "prettier/prettier": "error",
+      "react/destructuring-assignment": [
+        "off",
+        "This rule is too coarse. e.g. destructuring + renaming, or for a single use are not an improvement"
+      ],
+      "react/jsx-one-expression-per-line": [
+        "off",
+        "-> prettier"
+      ],
+      "react/jsx-wrap-multilines": [
+        "off",
+        "-> prettier"
+      ],
+      "react/jsx-props-no-spreading": [
+        "off",
+        "We are using prop spreading quite a lot to ease components re-use"
+      ],
+      "jsx-a11y/tabindex-no-positive": "warn",
+      "quotes": [
+        "error",
+        "single",
+        {
+          "allowTemplateLiterals": false,
+          "avoidEscape": true
+        }
+      ],
+      "react/jsx-no-bind": [
+        "off",
+        "As of useEffect/useState, binds are not considered bad anymore. See https://reactjs.org/docs/hooks-faq.html#are-hooks-slow-because-of-creating-functions-in-render"
+      ],
+      "no-param-reassign": [
+        "off",
+        "Seems to be too strict, sometimes it is needed to reassign the same variable in functions"
+      ],
+      "react/prop-types": [
+        "off",
+        "Turning off for now, will see if it is really needed later"
+      ],
+      "react/react-in-jsx-scope": [
+        "off",
+        "Using preact"
+      ],
+      "react/jsx-filename-extension": [
+        "off",
+        "File extensions don't really help"
+      ],
+      "react/state-in-constructor": [
+        "off",
+        "Using the new syntax"
+      ],
+      "jsx-a11y/click-events-have-key-events": "warn",
+      "jsx-a11y/no-noninteractive-element-interactions": "warn",
+      "no-plusplus": "warn",
+      "react/no-access-state-in-setstate": "warn"
+    }
   },
   "eslintIgnore": [
     "build/*"
   ],
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
   "devDependencies": {
     "eslint": "^6.0.1",
     "eslint-config-synacor": "^3.0.4",
     "preact-cli": "^3.0.0-rc.6",
-    "preact-router": "^3.2.1",
     "sirv-cli": "^0.4.5"
   },
   "dependencies": {
     "@material-ui/core": "^4.9.12",
     "bootstrap": "^4.4.1",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-react": "^7.19.0",
     "history": "^4.10.1",
     "lodash": "^4.17.15",
     "node-sass": "^4.13.1",
     "preact": "^10.1.0",
     "preact-render-to-string": "^5.1.2",
+    "preact-router": "^3.2.1",
+    "prettier": "^2.0.5",
     "sass-loader": "^8.0.2"
   }
 }

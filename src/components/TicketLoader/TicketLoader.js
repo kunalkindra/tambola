@@ -2,7 +2,7 @@
 import { Component } from 'preact';
 import Drawer from '../Drawer/Drawer';
 import Loader from '../Loader/Loader';
-import { DisplayTicket } from '../DisplayTicket/DisplayTicket';
+import DisplayTicket from '../DisplayTicket/DisplayTicket';
 import TextField from '@material-ui/core/TextField/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import { getTicket } from '../../api';
@@ -23,14 +23,14 @@ export default class TicketLoader extends Component {
     handleInputChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
     };
-    
+
     getTicket = async () => {
         this.setState({ loadingTicket: true });
         const ticketNumber = Number(this.state.ticketNumber);
         const ticket = await getTicket(ticketNumber);
         this.setState({ ticket, loadingTicket: false })
     };
-    
+
     renderTicket() {
         const { loadingTicket, ticket, checkedNumbers } = this.state;
         if(loadingTicket) {
@@ -40,7 +40,7 @@ export default class TicketLoader extends Component {
             return <DisplayTicket numbers={ticket.ticket} checkedNumbers={checkedNumbers} fixedSize />
         }
     }
-    
+
     render() {
     	let open = this.state.open;
     	return (
