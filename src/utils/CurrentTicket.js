@@ -13,7 +13,10 @@ const CurrentTicket = {
   },
   getId() {
     if (this.isValid()) return this.read().id;
-    const ticketId = Math.floor(Math.random() * 99999);
+    let ticketId = Math.floor(Math.random() * 99999);
+    if (ticketId % 1000 === 0) {
+      ticketId += 1;
+    }
     return ticketId;
   },
   isValid() {
