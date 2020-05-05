@@ -3,11 +3,11 @@ import TextField from '@material-ui/core/TextField/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import React from 'preact/compat';
 import Drawer from '../Drawer/Drawer';
-import { ResolvedDisplayTicket } from '../DisplayTicket/DisplayTicket';
+import TicketValidator from '../TicketValidator/TicketValidator';
 
-export default class TicketLoader extends Component {
+export default class TicketDrawer extends Component {
   state = {
-    open: false,
+    open: true,
     ticketNumber: '',
     showTicket: false,
   };
@@ -24,13 +24,14 @@ export default class TicketLoader extends Component {
     this.setState({ [e.target.name]: e.target.value, showTicket: false });
   };
 
-  showTicket = async () => {
+  showTicket = async (e) => {
+    e.preventDefault();
     this.setState({ showTicket: true });
   };
 
   render() {
-    const { open } = this.state;
-    const { checkedNumbers, ticketNumber, showTicket } = this.state;
+    const { open, ticketNumber, showTicket } = this.state;
+    const { allCheckedNumbers } = this.props;
     return (
       <span>
         <button
@@ -41,30 +42,26 @@ export default class TicketLoader extends Component {
           !!
         </button>
         <Drawer open={open} onClose={this.handleClose}>
-          <div className="d-flex align-items-end">
-            <FormControl>
-              <TextField
-                id="ticketNumber"
-                name="ticketNumber"
-                label="Ticket Number"
-                onChange={this.handleInputChange}
-                value={this.state.ticketNumber}
-              />
-            </FormControl>
-            <button
-              type="button"
-              className="ml-3 btn btn-primary"
-              onClick={this.showTicket}
-            >
-              Load ticket
-            </button>
-          </div>
+          <h3>Ticket number daalo zara?</h3>
+          <div className="mt-4" />
+          <form onSubmit={this.showTicket}>
+            <div className="d-flex align-items-end">
+              <FormControl>
+                <TextField
+                  id="ticketNumber"
+                  name="ticketNumber"
+                  label="Ticket Number"
+                  onChange={this.handleInputChange}
+                  value={this.state.ticketNumber}
+                />
+              </FormControl>
+            </div>
+          </form>
           <div className="mt-5" />
           {showTicket && (
-            <ResolvedDisplayTicket
-              checkedNumbers={checkedNumbers}
-              fixedSize
+            <TicketValidator
               ticketId={ticketNumber}
+              allCheckedNumbers={allCheckedNumbers}
             />
           )}
         </Drawer>

@@ -31,9 +31,9 @@ button {
   top: 0;
   bottom: 0;
   background: white;
-  right: -500px;
-  width: 500px;
-  transition: right 0.5s;
+  right: -50%;
+  width: 50%;
+  transition: right 0.3s;
   z-index: 1000;
   &-open {
     right: 0;

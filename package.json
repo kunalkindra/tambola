@@ -8,7 +8,8 @@
     "copy_manifest": "cp manifest.json build/manifest.json",
     "serve": "sirv build --cors --single",
     "dev": "preact watch",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "test": "jest"
   },
   "eslintConfig": {
     "parser": "babel-eslint",
@@ -106,6 +107,7 @@
   "devDependencies": {
     "eslint": "^6.0.1",
     "eslint-config-synacor": "^3.0.4",
+    "jest": "^26.0.1",
     "preact-cli": "^3.0.0-rc.6",
     "sirv-cli": "^0.4.5"
   },

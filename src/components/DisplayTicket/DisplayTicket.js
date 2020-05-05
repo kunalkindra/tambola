@@ -4,6 +4,8 @@ import { getTicket } from '../../api';
 export default function DisplayTicket({
   ticket: { ticket: numbers },
   checkedNumbers = [],
+  validNumbers = [],
+  missingNumbers = [],
   onNumberCheck = () => {},
   fixedSize,
 }) {
@@ -16,7 +18,11 @@ export default function DisplayTicket({
           {line.map((number) => {
             const classes = ['ticket__number', 'px-0'];
             const checked = checkedNumbers.includes(number);
+            const valid = validNumbers.includes(number);
+            const missing = missingNumbers.includes(number);
             if (checked) classes.push('ticket__number--checked');
+            if (valid) classes.push('ticket__number--valid');
+            if (missing) classes.push('ticket__number--missing');
             return (
               <td
                 onClick={onNumberCheck}
@@ -33,11 +39,13 @@ export default function DisplayTicket({
   );
 }
 
-export const ResolvedDisplayTicket = withResolved({
+export const withTicketData = withResolved({
   query: getTicket,
   queryArgs: (props) => props.ticketId,
   as: 'ticket',
   loadingProps: {
     message: 'Just a moment - loading the ticket!',
   },
-})(DisplayTicket);
+});
+
+export const ResolvedDisplayTicket = withTicketData(DisplayTicket);

@@ -11,7 +11,12 @@
   }
   &__number--checked {
     background: $warning;
-    color: $white;
     text-decoration: line-through;
+  }
+  &__number--valid {
+    background: $warning;
+  }
+  &__number--missing {
+    background: $danger;
   }
 }
