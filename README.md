@@ -1,1 +1,1 @@
-This is an application for Tambola.
+Tambola - https://en.wikipedia.org/wiki/Tombola_(raffle)
