@@ -7,7 +7,7 @@ import TicketValidator from '../TicketValidator/TicketValidator';
 
 export default class TicketDrawer extends Component {
   state = {
-    open: true,
+    open: false,
     ticketNumber: '',
     showTicket: false,
   };
