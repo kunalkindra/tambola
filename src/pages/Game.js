@@ -4,7 +4,7 @@ import last from '../utils/last';
 import NumbersTable from '../components/NumbersTable/NumbersTable';
 import NumberBanner from '../components/NumberBanner/NumberBanner';
 import IntroModal from '../components/IntroModal/IntroModal';
-import WinnersTable from '../components/WinnersTable/WinnersTable';
+import Winners from '../components/Winners/Winners';
 import bingoNumberWords from '../constants/phrases';
 import TicketDrawer from '../components/TicketDrawer/TicketDrawer';
 
@@ -61,7 +61,7 @@ export default class Game extends Component {
             </span>
           }
         >
-          <WinnersTable prizes={prizes} onChange={this.onWinnerChange} />
+          <Winners prizes={prizes} onChange={this.onWinnerChange} />
         </IntroModal>
       );
     }
@@ -89,7 +89,7 @@ export default class Game extends Component {
           </button>
           <hr className="w-100" />
           <div className="w-100">
-            <WinnersTable prizes={prizes} onChange={onWinnerChange} />
+            <Winners prizes={prizes} onChange={onWinnerChange} />
           </div>
         </div>
       </div>

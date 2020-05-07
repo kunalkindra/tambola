@@ -1,0 +1,14 @@
+.winners {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 1rem;
+  row-gap: 1rem;
+}
+
+.winners__name {
+  font-size: 20px;
+  border-width: 0 0 2px;
+  &:focus {
+    outline: none;
+  }
+}
