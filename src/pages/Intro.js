@@ -15,7 +15,7 @@ export default class Intro extends Component {
   }
 
   render() {
-    const { prizes } = this.props;
+    const { prizes, onPrizeChange } = this.props;
     return (
       <>
         <div className="row d-lg-none">
@@ -35,7 +35,7 @@ export default class Intro extends Component {
           <IntroModal title="Tambola">
             <div className="row">
               <div className="col-6">
-                <PrizeTable prizes={prizes} />
+                <PrizeTable prizes={prizes} onPrizeChange={onPrizeChange} />
               </div>
               <div className="col-6">
                 <div className="mb-5" />

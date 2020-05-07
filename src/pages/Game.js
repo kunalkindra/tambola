@@ -48,7 +48,7 @@ export default class Game extends Component {
 
   render() {
     const { numbers, usedNumbers } = this.state;
-    const { onWinnerChange, prizes } = this.props;
+    const { onPrizeChange, prizes } = this.props;
     const currentNumber = last(usedNumbers);
 
     if (!numbers.length) {
@@ -61,7 +61,7 @@ export default class Game extends Component {
             </span>
           }
         >
-          <Winners prizes={prizes} onChange={this.onWinnerChange} />
+          <Winners prizes={prizes} onChange={this.onPrizeChange} />
         </IntroModal>
       );
     }
@@ -89,7 +89,7 @@ export default class Game extends Component {
           </button>
           <hr className="w-100" />
           <div className="w-100">
-            <Winners prizes={prizes} onChange={onWinnerChange} />
+            <Winners prizes={prizes} onChange={onPrizeChange} />
           </div>
         </div>
       </div>

@@ -66,10 +66,10 @@ export default class Main extends Component {
     ],
   };
 
-  onWinnerChange = (id, name) => {
+  onPrizeChange = (id, prop, value) => {
     const updatedPrizes = this.state.prizes.map((p) => {
       if (p.id === id) {
-        return { ...p, winner: name };
+        return { ...p, [prop]: value };
       }
       return p;
     });
@@ -82,11 +82,15 @@ export default class Main extends Component {
       <div id="app">
         <div id="app" className="container-fluid p-4">
           <Router history={createHashHistory()}>
-            <Intro path="/" prizes={this.state.prizes} />
+            <Intro
+              path="/"
+              prizes={this.state.prizes}
+              onPrizeChange={this.onPrizeChange}
+            />
             <Game
               path="/game"
               prizes={this.state.prizes}
-              onWinnerChange={this.onWinnerChange}
+              onPrizeChange={this.onPrizeChange}
             />
             <Ticket path="/ticket" />
           </Router>

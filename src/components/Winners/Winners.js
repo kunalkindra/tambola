@@ -20,7 +20,7 @@ export default function Winners({ prizes, onChange }) {
             <input
               type="text"
               value={winner}
-              onChange={(e) => onChange(id, e.target.value)}
+              onChange={(e) => onChange(id, 'winner', e.target.value)}
               className="winners__name bg-transparent text-white"
             />
           </Card>

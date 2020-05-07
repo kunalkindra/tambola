@@ -1,4 +1,4 @@
-export default function PrizeTable({ prizes }) {
+export default function PrizeTable({ prizes, onPrizeChange }) {
   const totalWinnings = prizes.reduce((acc, cur) => cur.amount + acc, 0);
   return (
     <>
@@ -10,10 +10,19 @@ export default function PrizeTable({ prizes }) {
           </tr>
         </thead>
         <tbody>
-          {prizes.map(({ name, amount }) => (
-            <tr>
+          {prizes.map(({ name, amount, id }) => (
+            <tr key={id}>
               <td>{name}</td>
-              <td className="text-right">{amount}</td>
+              <td className="text-right">
+                <input
+                  type="text"
+                  className="text-right border-0 focus-0"
+                  onChange={(e) => {
+                    onPrizeChange(id, 'amount', +e.target.value || 0);
+                  }}
+                  value={amount}
+                />
+              </td>
             </tr>
           ))}
           <tr>
