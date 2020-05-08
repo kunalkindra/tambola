@@ -66,6 +66,12 @@ export default class Main extends Component {
     ],
   };
 
+  resetWinners = () => {
+    this.setState({
+      prizes: this.state.prizes.map((p) => ({ ...p, winner: '' })),
+    });
+  };
+
   onPrizeChange = (id, prop, value) => {
     const updatedPrizes = this.state.prizes.map((p) => {
       if (p.id === id) {
@@ -86,6 +92,7 @@ export default class Main extends Component {
               path="/"
               prizes={this.state.prizes}
               onPrizeChange={this.onPrizeChange}
+              resetWinners={this.resetWinners}
             />
             <Game
               path="/game"

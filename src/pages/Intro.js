@@ -1,11 +1,11 @@
 import { Component } from 'preact';
-import { Link } from 'preact-router/match';
-import { route } from 'preact-router';
+import { Link, route } from 'preact-router';
 import PrizeTable from '../components/PrizeTable/PrizeTable';
 import IntroModal from '../components/IntroModal/IntroModal';
 import NewTicketLink from '../components/NewTicketLink/NewTicketLink';
 import CurrentTicket from '../utils/CurrentTicket';
 import { ROUTES } from '../constants/routes';
+import CurrentGame from '../utils/CurrentGame';
 
 export default class Intro extends Component {
   componentDidMount() {
@@ -13,6 +13,18 @@ export default class Intro extends Component {
       route(ROUTES.TICKET(CurrentTicket.getId()));
     }
   }
+
+  resetAndStartNewGame = () => {
+    if (CurrentGame.hasSavedGame()) {
+      const result = window.confirm(
+        'This will clear the saved game. Are you sure?',
+      );
+      if (!result) return;
+    }
+    this.props.resetWinners();
+    CurrentGame.reset();
+    route(ROUTES.GAME());
+  };
 
   render() {
     const { prizes, onPrizeChange } = this.props;
@@ -42,13 +54,27 @@ export default class Intro extends Component {
                 <p className="h2">Kre shuru?</p>
                 <div className="mb-5" />
                 <br />
-                <Link
+                <button
                   type="button"
-                  href={ROUTES.GAME()}
+                  onClick={this.resetAndStartNewGame}
                   className="btn btn-primary btn-lg mx-auto w-50"
                 >
-                  Start
-                </Link>
+                  New game
+                </button>
+                {CurrentGame.hasSavedGame() && (
+                  <>
+                    <div className="mt-5" />
+                    or
+                    <div className="mt-5" />
+                    <Link
+                      href={ROUTES.GAME()}
+                      type="button"
+                      className="btn btn-secondary btn-lg"
+                    >
+                      Continue saved game
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </IntroModal>

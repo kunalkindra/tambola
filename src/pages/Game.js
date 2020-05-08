@@ -1,5 +1,5 @@
 import { Component } from 'preact';
-import shuffle from '../utils/shuffle';
+import { Link } from 'preact-router';
 import last from '../utils/last';
 import NumbersTable from '../components/NumbersTable/NumbersTable';
 import NumberBanner from '../components/NumberBanner/NumberBanner';
@@ -7,35 +7,14 @@ import IntroModal from '../components/IntroModal/IntroModal';
 import Winners from '../components/Winners/Winners';
 import bingoNumberWords from '../constants/phrases';
 import TicketDrawer from '../components/TicketDrawer/TicketDrawer';
-
-function getRandomizedNumbers() {
-  const numArray = [];
-  for (let i = 1; i <= 90; i++) {
-    numArray.push(i);
-  }
-  return shuffle(numArray);
-}
-
-function getInitialState() {
-  const randomizedNumbers = getRandomizedNumbers();
-  return {
-    numbers: randomizedNumbers.slice(0, randomizedNumbers.length - 1),
-    usedNumbers: [last(randomizedNumbers)],
-  };
-}
+import CurrentGame from '../utils/CurrentGame';
+import { ROUTES } from '../constants/routes';
 
 export default class Game extends Component {
-  state = getInitialState();
+  state = CurrentGame.get();
 
-  componentDidMount() {
-    window.onbeforeunload = function (e) {
-      e = e || window.event;
-      const returnString = 'Are you sure?';
-      if (e) {
-        e.returnValue = returnString;
-      }
-      return returnString;
-    };
+  componentDidUpdate() {
+    CurrentGame.save(this.state);
   }
 
   generateNumber = () => {
@@ -44,6 +23,11 @@ export default class Game extends Component {
       numbers: numbers.slice(0, numbers.length - 1),
       usedNumbers: usedNumbers.concat(last(numbers)),
     });
+  };
+
+  resetGame = () => {
+    CurrentGame.reset();
+    this.setState(CurrentGame.get());
   };
 
   render() {
@@ -62,6 +46,10 @@ export default class Game extends Component {
           }
         >
           <Winners prizes={prizes} onChange={this.onPrizeChange} />
+          <div className="mt-5" />
+          <Link type="button" className="btn btn-primary" href={ROUTES.HOME()}>
+            Play again?
+          </Link>
         </IntroModal>
       );
     }
