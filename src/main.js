@@ -4,11 +4,11 @@ import Router from 'preact-router';
 import { createHashHistory } from 'history';
 
 import Ticket from './pages/Ticket';
-import Intro from './pages/Intro';
 import Game from './pages/Game';
 import Session from './session';
 import { signUp } from './api';
 import Loader from './components/Loader/Loader';
+import Home from './pages/Home';
 
 export default class Main extends Component {
   state = {
@@ -76,7 +76,7 @@ export default class Main extends Component {
     if (!user) {
       const newUser = await signUp();
       this.setState({ user: newUser });
-      Session.set(user);
+      Session.set(newUser);
       return;
     }
     this.setState({ user });
@@ -108,14 +108,9 @@ export default class Main extends Component {
             <Loader />
           ) : (
             <Router history={createHashHistory()}>
-              <Intro
-                path="/"
-                prizes={prizes}
-                onPrizeChange={this.onPrizeChange}
-                resetWinners={this.resetWinners}
-              />
+              <Home path="/" />
               <Game
-                path="/game"
+                path="/game/:id"
                 prizes={prizes}
                 onPrizeChange={this.onPrizeChange}
               />

@@ -37,3 +37,11 @@ export function signUp() {
 export function getGame(id) {
   return get(`${API_URL}/game/${id}`);
 }
+
+export function generateNextNumber(id) {
+  return get(`${API_URL}/game/${id}/next`);
+}
+
+export function createGame() {
+  return post(`${API_URL}/game`);
+}

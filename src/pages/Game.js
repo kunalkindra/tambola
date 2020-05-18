@@ -9,19 +9,25 @@ import bingoNumberWords from '../constants/phrases';
 import TicketDrawer from '../components/TicketDrawer/TicketDrawer';
 import CurrentGame from '../utils/CurrentGame';
 import { ROUTES } from '../constants/routes';
+import { getGame, generateNextNumber } from '../api';
+import withResolved from '../components/hoc/WithResolved/WithResolved';
 
-export default class Game extends Component {
-  state = CurrentGame.get();
+class Game extends Component {
+  state = {
+    players: this.props.game.players,
+    prizes: this.props.game.prizes,
+    elapsedNumbers: this.props.game.elapsedNumbers,
+  };
 
   componentDidUpdate() {
     CurrentGame.save(this.state);
   }
 
-  generateNumber = () => {
-    const { numbers, usedNumbers } = this.state;
+  generateNumber = async () => {
+    const { id } = this.props;
+    const { elapsedNumbers } = await generateNextNumber(id);
     this.setState({
-      numbers: numbers.slice(0, numbers.length - 1),
-      usedNumbers: usedNumbers.concat(last(numbers)),
+      elapsedNumbers,
     });
   };
 
@@ -31,11 +37,11 @@ export default class Game extends Component {
   };
 
   render() {
-    const { numbers, usedNumbers } = this.state;
+    const { elapsedNumbers } = this.state;
     const { onPrizeChange, prizes } = this.props;
-    const currentNumber = last(usedNumbers);
+    const currentNumber = last(elapsedNumbers);
 
-    if (!numbers.length) {
+    if (elapsedNumbers.length === 90) {
       return (
         <IntroModal
           title={
@@ -57,11 +63,11 @@ export default class Game extends Component {
     return (
       <div className="row">
         <div className="col col-sm-6 border-right">
-          <NumbersTable numbers={usedNumbers} />
+          <NumbersTable numbers={elapsedNumbers} />
         </div>
         <div className="col col-sm-6 d-flex align-items-center flex-column">
           <div className="ticketLoader__cont">
-            <TicketDrawer allCheckedNumbers={usedNumbers} />
+            <TicketDrawer allCheckedNumbers={elapsedNumbers} />
           </div>
           <p className="w-100 h2 text-center text-primary mb-2">
             &apos;{bingoNumberWords[currentNumber - 1]}&apos;
@@ -84,3 +90,12 @@ export default class Game extends Component {
     );
   }
 }
+
+export default withResolved({
+  query: getGame,
+  queryArgs: (props) => props.id,
+  as: 'game',
+  loadingProps: {
+    message: 'Just a moment - getting the game ready!',
+  },
+})(Game);

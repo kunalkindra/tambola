@@ -6,7 +6,7 @@ export function request(url, options) {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      user: lodashGet(Session.get(), 'id', null),
+      user: lodashGet(Session.get(), '_id', null),
     },
     ...options,
   });
