@@ -1,10 +1,14 @@
 import { Component } from 'preact';
-
+import React from 'preact/compat';
 import Router from 'preact-router';
 import { createHashHistory } from 'history';
+
 import Ticket from './pages/Ticket';
 import Intro from './pages/Intro';
 import Game from './pages/Game';
+import Session from './session';
+import { signUp } from './api';
+import Loader from './components/Loader/Loader';
 
 export default class Main extends Component {
   state = {
@@ -64,6 +68,18 @@ export default class Main extends Component {
         winner: '',
       },
     ],
+    user: null,
+  };
+
+  componentDidMount = async () => {
+    const user = Session.get();
+    if (!user) {
+      const newUser = await signUp();
+      this.setState({ user: newUser });
+      Session.set(user);
+      return;
+    }
+    this.setState({ user });
   };
 
   resetWinners = () => {
@@ -84,23 +100,28 @@ export default class Main extends Component {
   };
 
   render() {
+    const { prizes, user } = this.state;
     return (
       <div id="app">
         <div id="app" className="container-fluid p-4">
-          <Router history={createHashHistory()}>
-            <Intro
-              path="/"
-              prizes={this.state.prizes}
-              onPrizeChange={this.onPrizeChange}
-              resetWinners={this.resetWinners}
-            />
-            <Game
-              path="/game"
-              prizes={this.state.prizes}
-              onPrizeChange={this.onPrizeChange}
-            />
-            <Ticket path="/ticket" />
-          </Router>
+          {!user ? (
+            <Loader />
+          ) : (
+            <Router history={createHashHistory()}>
+              <Intro
+                path="/"
+                prizes={prizes}
+                onPrizeChange={this.onPrizeChange}
+                resetWinners={this.resetWinners}
+              />
+              <Game
+                path="/game"
+                prizes={prizes}
+                onPrizeChange={this.onPrizeChange}
+              />
+              <Ticket path="/ticket" />
+            </Router>
+          )}
         </div>
       </div>
     );

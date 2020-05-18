@@ -1,5 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import round from 'lodash/round';
+import { get, post } from './request';
+
+const API_URL = 'http://localhost:3000/api';
 
 function getTicketFileName(ticketId) {
   let firstNumber;
@@ -19,12 +22,18 @@ export const getTicket = async (id) => {
     return Promise.reject(new Error('Invalid ticket number!'));
   }
   const ticketFileName = getTicketFileName(id);
-  const tickets = await fetch(
-    `assets/tickets/${ticketFileName}`,
-  ).then((response) => response.json());
+  const tickets = await get(`assets/tickets/${ticketFileName}`);
   const ticket = tickets.find((t) => t.id === id);
   if (!ticket) {
     return Promise.reject(new Error('Ticket not found in file'));
   }
   return ticket;
 };
+
+export function signUp() {
+  return post(`${API_URL}/user`);
+}
+
+export function getGame(id) {
+  return get(`${API_URL}/game/${id}`);
+}
