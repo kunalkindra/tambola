@@ -2,7 +2,7 @@ import withResolved from '../hoc/WithResolved/WithResolved';
 import { getTicket } from '../../api';
 
 export default function DisplayTicket({
-  ticket: { ticket: numbers },
+  ticket: { numbers },
   checkedNumbers = [],
   validNumbers = [],
   missingNumbers = [],

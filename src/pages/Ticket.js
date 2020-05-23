@@ -1,22 +1,25 @@
+/* eslint-disable no-underscore-dangle */
 import { Link } from 'preact-router';
 import { Component } from 'preact';
 import zeroPad from '../utils/zeroPad';
-import SavedTicket from '../utils/SavedTicket';
-import CurrentTicket from '../utils/CurrentTicket';
 import { ROUTES } from '../constants/routes';
 import DisplayTicket from '../components/DisplayTicket/DisplayTicket';
 import withResolved from '../components/hoc/WithResolved/WithResolved';
-import { getTicket } from '../api';
+import { getTicket, updateTicket } from '../api';
+import Session from '../session';
 
 class Ticket extends Component {
   state = {
-    checkedNumbers: SavedTicket.read(this.props.id),
+    checkedNumbers: this.props.ticket.checkedNumbers,
     alertVisible: true,
   };
 
-  componentDidUpdate() {
-    SavedTicket.update(this.props.id, this.state.checkedNumbers);
-    if (!this.getRemainingNumbers()) CurrentTicket.reset();
+  async componentDidUpdate() {
+    const {
+      ticket: { _id: id },
+    } = this.props;
+    const { checkedNumbers } = this.state;
+    await updateTicket(id, { checkedNumbers });
   }
 
   getRemainingNumbers() {
@@ -40,7 +43,7 @@ class Ticket extends Component {
 
   render() {
     const { checkedNumbers, alertVisible } = this.state;
-    const { id, ticket } = this.props;
+    const { ticket } = this.props;
     const remainingNumbers = this.getRemainingNumbers();
     return (
       <div>
@@ -53,7 +56,7 @@ class Ticket extends Component {
           </p>
         )}
         <div className="d-flex justify-content-between align-items-baseline">
-          <div className="h6 text-muted m-0"># {id}</div>
+          <div className="h6 text-muted m-0" />
           <div>
             Remaining -{' '}
             <span className="bg-info text-white p-1 rounded h6">
@@ -82,7 +85,7 @@ class Ticket extends Component {
 
 export default withResolved({
   query: getTicket,
-  queryArgs: (props) => props.id,
+  queryArgs: ({ gameId }) => ({ gameId, userId: Session.get()._id }),
   as: 'ticket',
   loadingProps: {
     message: 'Just a moment - getting your ticket ready!',

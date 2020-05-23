@@ -23,3 +23,11 @@ export function post(url, data = {}, options) {
     ...options,
   }).then((response) => response.json());
 }
+
+export function patch(url, data = {}, options) {
+  return request(url, {
+    method: 'PATCH',
+    body: JSON.stringify(data),
+    ...options,
+  }).then((response) => response.json());
+}

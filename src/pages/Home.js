@@ -1,12 +1,13 @@
+import React from 'preact/compat';
 import { Component } from 'preact';
-import { route } from 'preact-router';
-import { createGame } from '../api';
+import { Link, route } from 'preact-router';
+import { createGame, joinGame } from '../api';
 import { ROUTES } from '../constants/routes';
 
 export default class Home extends Component {
   onNewGame = async () => {
     const { _id: id } = await createGame();
-    route(ROUTES.GAME(id));
+    route(ROUTES.LOBBY(id));
   };
 
   render() {
@@ -24,9 +25,9 @@ export default class Home extends Component {
             New Game
           </button>
           <div className="mb-5" />
-          <button type="button" className="btn-primary btn-lg w-50">
+          <Link href={ROUTES.JOIN()} className="btn btn-secondary btn-lg w-50">
             Join a game
-          </button>
+          </Link>
         </div>
       </div>
     );

@@ -6,9 +6,10 @@ import { createHashHistory } from 'history';
 import Ticket from './pages/Ticket';
 import Game from './pages/Game';
 import Session from './session';
-import { signUp } from './api';
-import Loader from './components/Loader/Loader';
 import Home from './pages/Home';
+import Lobby from './pages/Lobby';
+import Signup from './components/SignUp/Signup';
+import Join from './pages/Join';
 
 export default class Main extends Component {
   state = {
@@ -68,18 +69,6 @@ export default class Main extends Component {
         winner: '',
       },
     ],
-    user: null,
-  };
-
-  componentDidMount = async () => {
-    const user = Session.get();
-    if (!user) {
-      const newUser = await signUp();
-      this.setState({ user: newUser });
-      Session.set(newUser);
-      return;
-    }
-    this.setState({ user });
   };
 
   resetWinners = () => {
@@ -100,12 +89,12 @@ export default class Main extends Component {
   };
 
   render() {
-    const { prizes, user } = this.state;
+    const { prizes } = this.state;
     return (
       <div id="app">
         <div id="app" className="container-fluid p-4">
-          {!user ? (
-            <Loader />
+          {!Session.get() ? (
+            <Signup />
           ) : (
             <Router history={createHashHistory()}>
               <Home path="/" />
@@ -115,6 +104,9 @@ export default class Main extends Component {
                 onPrizeChange={this.onPrizeChange}
               />
               <Ticket path="/ticket" />
+              <Lobby path="/lobby/:gameId" />
+              <Join path="/join" />
+              <Join path="/join/:gameId" />
             </Router>
           )}
         </div>
