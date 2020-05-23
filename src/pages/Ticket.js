@@ -7,6 +7,7 @@ import DisplayTicket from '../components/DisplayTicket/DisplayTicket';
 import withResolved from '../components/hoc/WithResolved/WithResolved';
 import { getTicket, updateTicket } from '../api';
 import Session from '../session';
+import RecentNumbers from '../components/RecentNumbers/RecentNumbers';
 
 class Ticket extends Component {
   state = {
@@ -56,7 +57,7 @@ class Ticket extends Component {
           </p>
         )}
         <div className="d-flex justify-content-between align-items-baseline">
-          <div className="h6 text-muted m-0" />
+          <RecentNumbers gameId={ticket.game} />
           <div>
             Remaining -{' '}
             <span className="bg-info text-white p-1 rounded h6">
